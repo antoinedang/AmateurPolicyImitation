@@ -1,7 +1,7 @@
 from amateur_pt import AmateurTrainer, MODEL_TYPES, evaluate_policy
 from typing import Optional
 import numpy as np
-from gymnasium.envs.classic_control import CartPoleEnv
+from gymnasium.envs.classic_control import MountainCarEnv
 from stable_baselines3 import *
 import argparse
 import pickle
@@ -11,16 +11,15 @@ from torch import optim
 from torch.optim import lr_scheduler
 
 
-class CartPoleAmateurTrainer(AmateurTrainer):
+class MountainCarAmateurTrainer(AmateurTrainer):
     def __init__(self, seed: Optional[int] = None):
         super().__init__(seed)
-        self.observation_space = CartPoleEnv().observation_space
+        self.observation_space = MountainCarEnv().observation_space
 
     def get_action(self, observation: np.ndarray) -> np.ndarray:
-        if observation[2] < 0:
-            return 0
-        else:
-            return 1
+        if abs(observation[1]) < 0.01:
+            return np.array([1])
+        return np.array([1]) if observation[1] > 0 else np.array([-1])
 
     def generate_observation(self, seed: Optional[int] = None) -> np.ndarray:
         return self.observation_space.sample()
@@ -48,8 +47,8 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    trainer = CartPoleAmateurTrainer(seed=0)
-    env_id = "CartPole-v1"
+    trainer = MountainCarAmateurTrainer(seed=0)
+    env_id = "MountainCarContinuous-v0"
     algo = MODEL_TYPES[args.algo.upper()]
     ppo_student = algo(args.policy, env_id)
 

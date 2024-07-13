@@ -9,6 +9,7 @@ from stable_baselines3 import *
 from stable_baselines3.common.base_class import BaseAlgorithm
 from stable_baselines3.common.evaluation import evaluate_policy as _evaluate_policy
 from stable_baselines3.common.vec_env import VecEnv
+from stable_baselines3.common.monitor import Monitor
 from stable_baselines3.common.type_aliases import PolicyPredictor
 from gymnasium import Env
 from scipy.spatial import distance
@@ -24,7 +25,10 @@ class AmateurTrainer:
     def predict(
         self, observation: Union[np.ndarray, Dict[str, np.ndarray]], *_, **__
     ) -> Tuple[np.ndarray, Optional[Tuple[np.ndarray, ...]]]:
-        return self.get_action(observation), None
+        actions = []
+        for obs in observation:
+            actions.append(self.get_action(obs))
+        return np.array(actions), None
 
     def generate_sample(self) -> Tuple[np.ndarray, np.ndarray]:
         obs = self.generate_observation(self.seed)
@@ -83,14 +87,15 @@ class AmateurTrainer:
                     else:
                         action = model(data)
                     action_prediction = action.double()
+                    target = target.double()
                 else:
                     # Retrieve the logits for A2C/PPO when using discrete actions
                     dist = model.get_distribution(data)
                     action_prediction = dist.distribution.logits
                     target_class = action_prediction * 0
                     target_class[target] = 1
-                    # target = target.float()
-                loss = criterion(action_prediction, target_class)
+                    target = target_class
+                loss = criterion(action_prediction, target)
                 loss.backward()
                 optimizer.step()
                 if batch_idx % log_interval == 0:
@@ -143,7 +148,7 @@ class AmateurDataset(Dataset):
 
 
 def evaluate_policy(
-    env: Union[str, Env, VecEnv],
+    env: Union[str, Env],
     policy: PolicyPredictor,
     trainer: Optional[AmateurTrainer] = None,
 ) -> Tuple[float, float, float]:
@@ -153,24 +158,26 @@ def evaluate_policy(
             "Trainer must be provided when evaluating a non-amateur policy."
         )
     if isinstance(env, str):
-        env = gym.make(env)
+        env = Monitor(gym.make(env))
     gen_obs_fn = (
         trainer.generate_observation
         if trainer is not None
         else policy.generate_observation
     )
-    avg_reward, std_reward = _evaluate_policy(policy, env)
+    avg_reward, std_reward = _evaluate_policy(policy, env, render=False)
 
     actions = []
     for _ in range(10000):
         obs = gen_obs_fn()
-        action, _ = policy.predict(obs, None, None, None)
-        actions.append(action)
+        action, _ = policy.predict([obs], None, None, None)
+        actions.append(action[0])
     actions = np.array(actions)
 
     if isinstance(env.action_space, gym.spaces.Discrete):
         class_counts = np.bincount(actions.flatten())
-        class_imbalance_score = sum(np.abs(class_counts - np.mean(class_counts)))
+        class_imbalance_score = sum(np.abs(class_counts - np.mean(class_counts))) / len(
+            actions
+        )
     elif isinstance(env.action_space, gym.spaces.Box):
 
         def average_distance_to_nearest_neighbor(points):
@@ -191,7 +198,9 @@ def evaluate_policy(
 
             return avg_distance
 
-        class_imbalance_score = 1.0 / average_distance_to_nearest_neighbor(actions)
+        class_imbalance_score = 1.0 / (
+            0.00001 + (average_distance_to_nearest_neighbor(actions) * len(actions))
+        )
     else:
         raise NotImplementedError(
             "Only Box and Discrete action spaces are supported. Got {}".format(
