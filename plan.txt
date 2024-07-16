@@ -1,0 +1,39 @@
+TODO:
+-> write policy training script
+-> improve measures of class imbalance
+-> write script to do several training params in a row (batch script maybe)
+-> 
+
+
+
+
+experiment 1:
+-> pre-train all env's on some amateur policies
+-> write script to create randomly initialized policies
+-> train warm-started policies and randomly initialized policies to convergence
+
+HOW:
+-> script to train amateur policy
+-> script to create randomly initialized policy with different initialization methods
+-> script to train starting from some policy state
+-> compare PPO, SAC, TD3, A2C
+
+sets of parameters:
+-> env: cartpole, gridworld, halfcheetah, humanoid, mountain car, hopper
+-> algo: PPO, SAC, TD3, A2C
+-> policy starting state: good amateur, xavier, orthogonal, uniform/random
+
+
+experiment 2:
+-> create 3 amateur policies per environment (2 new ones)
+    -> really bad, purely random (class balance!), really good
+-> re-use training results from experiment 1
+
+sets of parameters:
+-> env: cartpole, gridworld, halfcheetah, humanoid, mountain car, hopper
+-> algo: PPO, SAC, TD3, A2C
+-> policy starting state: random policy, bad amateur
+
+
+
+MISSING AXES OF ANALYSIS: non-MLP policy, 

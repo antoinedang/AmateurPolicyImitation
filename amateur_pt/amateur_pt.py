@@ -15,7 +15,7 @@ from gymnasium import Env
 from scipy.spatial import distance
 
 
-class AmateurTrainer:
+class AmateurTeacher:
     def __init__(self, seed: Optional[int] = None):
         self.seed = seed
         if seed is not None:
@@ -41,7 +41,7 @@ class AmateurTrainer:
         student: BaseAlgorithm,
         batch_size: int = 64,
         epochs: int = 1000,
-        expert_interactions_per_epoch: int = int(4e4),
+        teacher_interactions_per_epoch: int = int(4e4),
         make_optimizer: Callable[
             [Iterator[torch.nn.Parameter]], optim.Optimizer
         ] = lambda params: optim.Adam(params, lr=1.0),
@@ -55,7 +55,7 @@ class AmateurTrainer:
             device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
         kwargs = {"num_workers": 1} if device == torch.device("cuda") else {}
-        dataset = AmateurDataset(self, expert_interactions_per_epoch)
+        dataset = AmateurDataset(self, teacher_interactions_per_epoch)
         data_loader = DataLoader(
             dataset=dataset,
             batch_size=batch_size,
@@ -133,41 +133,41 @@ class AmateurTrainer:
 class AmateurDataset(Dataset):
     def __init__(
         self,
-        trainer: AmateurTrainer,
+        teacher: AmateurTeacher,
         len: int,
     ):
-        self.trainer = trainer
+        self.teacher = teacher
         self.len = len
 
     def __len__(self) -> int:
         return self.len
 
     def __getitem__(self, _) -> Tuple[torch.Tensor, torch.Tensor]:
-        x, y = self.trainer.generate_sample()
+        x, y = self.teacher.generate_sample()
         return torch.tensor(x), torch.tensor(y)
 
 
 def evaluate_policy(
     env: Union[str, Env],
     policy: PolicyPredictor,
-    trainer: Optional[AmateurTrainer] = None,
+    teacher: Optional[AmateurTeacher] = None,
 ) -> Tuple[float, float, float]:
 
-    if not isinstance(policy, AmateurTrainer) and trainer is None:
+    if not isinstance(policy, AmateurTeacher) and teacher is None:
         raise ValueError(
-            "Trainer must be provided when evaluating a non-amateur policy."
+            "Teacher must be provided when evaluating a non-amateur policy."
         )
     if isinstance(env, str):
         env = Monitor(gym.make(env))
     gen_obs_fn = (
-        trainer.generate_observation
-        if trainer is not None
+        teacher.generate_observation
+        if teacher is not None
         else policy.generate_observation
     )
     avg_reward, std_reward = _evaluate_policy(policy, env, render=False)
 
     actions = []
-    for _ in range(10000):
+    for _ in range(100000):
         obs = gen_obs_fn()
         action, _ = policy.predict([obs], None, None, None)
         actions.append(action[0])
