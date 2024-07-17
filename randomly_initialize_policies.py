@@ -28,7 +28,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--algo",
         type=str,
-        help="Type of algorithm policy to pre-train, i.e. PPO, SAC, A2C, etc.",
+        help="Type of algorithm policy to pre-train, i.e. PPO, SAC, TD3, A2C",
     )
     parser.add_argument(
         "-o",

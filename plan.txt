@@ -1,8 +1,6 @@
 TODO:
--> write policy training script
 -> improve measures of class imbalance
--> write script to do several training params in a row (batch script maybe)
--> 
+-> write 1 good, 1 bad, 1 exactly random policy for each environment
 
 
 

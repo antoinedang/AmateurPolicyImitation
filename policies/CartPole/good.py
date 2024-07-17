@@ -25,7 +25,7 @@ if __name__ == "__main__":
     teacher = CartPoleAmateurTeacher(seed=0)
     env_id = "CartPole-v1"
     training_kwargs = dict(
-        epochs=2,
+        epochs=100,
         teacher_interactions_per_epoch=int(4e4),
         make_optimizer=lambda params: optim.Adam(params, lr=1.0),
         make_scheduler=lambda optimizer: lr_scheduler.StepLR(

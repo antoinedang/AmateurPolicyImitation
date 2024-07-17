@@ -3,15 +3,13 @@ from amateur_pt import evaluate_policy, AmateurTeacher
 import pathlib
 import torch
 import os
-from stable_baselines3 import PPO, SAC, A2C, TD3, DQN, DDPG
+from stable_baselines3 import PPO, SAC, TD3, A2C
 
 MODEL_TYPES = {
     "PPO": PPO,
     "SAC": SAC,
-    "A2C": A2C,
     "TD3": TD3,
-    "DQN": DQN,
-    "DDPG": DDPG,
+    "A2C": A2C,
 }
 
 
