@@ -1,4 +1,4 @@
-from amateur_pt.core import AmateurTeacher, transfer_knowledge_and_save
+from amateur_pt import AmateurTeacher, transfer_knowledge_and_save
 from typing import Optional
 import numpy as np
 from gymnasium.envs.box2d import LunarLander
@@ -11,6 +11,7 @@ class LunarLanderAmateurTeacher(AmateurTeacher):
         super().__init__(seed)
         self.observation_space = LunarLander().observation_space
         self.action_space = LunarLander().action_space
+        self.env_id = "LunarLander-v2"
 
     def get_action(self, observation: np.ndarray) -> np.ndarray:
         return self.action_space.sample()
@@ -21,7 +22,6 @@ class LunarLanderAmateurTeacher(AmateurTeacher):
 
 if __name__ == "__main__":
     teacher = LunarLanderAmateurTeacher(seed=0)
-    env_id = "LunarLander-v2"
     training_kwargs = dict(
         epochs=100,
         teacher_interactions_per_epoch=int(4e4),
@@ -37,5 +37,5 @@ if __name__ == "__main__":
     ##############################################
 
     pre_trained_state_dict = transfer_knowledge_and_save(
-        teacher, env_id, training_kwargs, algo_kwargs, __file__
+        teacher, teacher.env_id, training_kwargs, algo_kwargs, __file__
     )

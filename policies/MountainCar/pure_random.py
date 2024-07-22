@@ -11,6 +11,7 @@ class MountainCarAmateurTeacher(AmateurTeacher):
         super().__init__(seed)
         self.observation_space = MountainCarEnv().observation_space
         self.action_space = MountainCarEnv().action_space
+        self.env_id = "MountainCarContinuous-v0"
 
     def get_action(self, observation: np.ndarray) -> np.ndarray:
         return self.action_space.sample()
@@ -21,7 +22,6 @@ class MountainCarAmateurTeacher(AmateurTeacher):
 
 if __name__ == "__main__":
     teacher = MountainCarAmateurTeacher(seed=0)
-    env_id = "MountainCarContinuous-v0"
     training_kwargs = dict(
         epochs=100,
         teacher_interactions_per_epoch=int(4e4),
@@ -37,5 +37,5 @@ if __name__ == "__main__":
     ##############################################
 
     pre_trained_state_dict = transfer_knowledge_and_save(
-        teacher, env_id, training_kwargs, algo_kwargs, __file__
+        teacher, teacher.env_id, training_kwargs, algo_kwargs, __file__
     )

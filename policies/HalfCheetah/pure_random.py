@@ -1,45 +1,27 @@
 from amateur_pt import AmateurTeacher, transfer_knowledge_and_save
 from typing import Optional
-from gymnasium.envs.box2d import LunarLander
+import numpy as np
+from gymnasium.envs.mujoco import HalfCheetahEnv
 from torch import optim
 from torch.optim import lr_scheduler
-import numpy as np
 
 
-class LunarLanderAmateurTeacher(AmateurTeacher):
+class HalfCheetahAmateurTeacher(AmateurTeacher):
     def __init__(self, seed: Optional[int] = None):
         super().__init__(seed)
-        self.observation_space = LunarLander().observation_space
-        self.env_id = "LunarLander-v2"
+        self.observation_space = HalfCheetahEnv().observation_space
+        self.action_space = HalfCheetahEnv().action_space
+        self.env_id = "HalfCheetah-v4"
 
     def get_action(self, observation: np.ndarray) -> np.ndarray:
-        x, y, vx, vy, angle, vangle, contact0, contact1 = observation
-
-        if x > 0.1:
-            # need to move right (lean slightly right)
-            if angle > 0:
-                return np.array([3])
-            elif angle < 0.1:
-                return np.array([1])
-            else:
-                return np.array([2])
-        elif x < -0.1:
-            # need to move right (lean slightly right)
-            if angle < 0:
-                return np.array([1])
-            elif angle > 0.1:
-                return np.array([3])
-            else:
-                return np.array([2])
-        else:
-            return np.array([0])
+        return self.action_space.sample()
 
     def generate_observation(self, seed: Optional[int] = None) -> np.ndarray:
         return self.observation_space.sample()
 
 
 if __name__ == "__main__":
-    teacher = LunarLanderAmateurTeacher(seed=0)
+    teacher = HalfCheetahAmateurTeacher(seed=0)
     training_kwargs = dict(
         epochs=100,
         teacher_interactions_per_epoch=int(4e4),
