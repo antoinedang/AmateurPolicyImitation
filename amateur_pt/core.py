@@ -8,7 +8,6 @@ import gymnasium as gym
 from stable_baselines3 import *
 from stable_baselines3.common.base_class import BaseAlgorithm
 from stable_baselines3.common.evaluation import evaluate_policy as _evaluate_policy
-from stable_baselines3.common.vec_env import VecEnv
 from stable_baselines3.common.monitor import Monitor
 from stable_baselines3.common.type_aliases import PolicyPredictor
 from gymnasium import Env
@@ -167,7 +166,7 @@ def evaluate_policy(
     avg_reward, std_reward = _evaluate_policy(policy, env, render=False)
 
     actions = []
-    for _ in range(100000):
+    for _ in range(100_000):
         obs = gen_obs_fn()
         action, _ = policy.predict([obs], None, None, None)
         actions.append(action[0])
@@ -175,8 +174,8 @@ def evaluate_policy(
 
     if isinstance(env.action_space, gym.spaces.Discrete):
         class_counts = np.bincount(actions.flatten())
-        class_imbalance_score = sum(np.abs(class_counts - np.mean(class_counts))) / len(
-            actions
+        class_balance_score = (
+            -1.0 * sum(np.abs(class_counts - np.mean(class_counts))) / len(actions)
         )
     elif isinstance(env.action_space, gym.spaces.Box):
 
@@ -198,9 +197,7 @@ def evaluate_policy(
 
             return avg_distance
 
-        class_imbalance_score = 1.0 / (
-            0.00001 + (average_distance_to_nearest_neighbor(actions) * len(actions))
-        )
+        class_balance_score = average_distance_to_nearest_neighbor(actions)
     else:
         raise NotImplementedError(
             "Only Box and Discrete action spaces are supported. Got {}".format(
@@ -208,4 +205,4 @@ def evaluate_policy(
             )
         )
 
-    return avg_reward, std_reward, class_imbalance_score
+    return avg_reward, std_reward, class_balance_score
