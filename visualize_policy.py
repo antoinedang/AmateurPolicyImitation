@@ -6,8 +6,8 @@ import gymnasium as gym
 
 MODEL_TYPE = SAC
 USE_POLICY_CLASS = True
-POLICY_NAME = "LunarLander"
-POLICY_TYPE = "good"  # bad, good, pure_random
+POLICY_NAME = "Walker2D"
+POLICY_TYPE = "pure_random"  # bad, good, pure_random
 
 ENV_ID = "MountainCarContinuous-v0"
 CKPT = "policies/MountainCar/good_ppo.pt"

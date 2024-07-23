@@ -24,10 +24,10 @@ if __name__ == "__main__":
     teacher = HalfCheetahAmateurTeacher(seed=0)
     training_kwargs = dict(
         epochs=100,
-        teacher_interactions_per_epoch=int(4e4),
-        make_optimizer=lambda params: optim.Adam(params, lr=1.0),
+        teacher_interactions_per_epoch=int(4e5),
+        make_optimizer=lambda params: optim.Adam(params, lr=0.05),
         make_scheduler=lambda optimizer: lr_scheduler.StepLR(
-            optimizer, step_size=1, gamma=0.7
+            optimizer, step_size=1, gamma=1.0
         ),
         log_interval=100,
         device="auto",
