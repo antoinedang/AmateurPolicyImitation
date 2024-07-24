@@ -16,7 +16,7 @@ class LunarLanderAmateurTeacher(AmateurTeacher):
     def get_action(self, observation: np.ndarray) -> np.ndarray:
         x, y, vx, vy, angle, vangle, contact0, contact1 = observation
 
-        if x > 0.05:
+        if x < -0.05:
             # need to move right (lean slightly right)
             if angle > 0.4:
                 return np.array([3])
@@ -27,7 +27,7 @@ class LunarLanderAmateurTeacher(AmateurTeacher):
                     return np.array([2])
                 else:
                     return np.array([0])
-        elif x < -0.05:
+        elif x > 0.05:
             # need to move right (lean slightly right)
             if angle > 0:
                 return np.array([3])
@@ -40,9 +40,9 @@ class LunarLanderAmateurTeacher(AmateurTeacher):
                     return np.array([0])
 
         else:
-            if angle > 0.1:
+            if angle < 0.1:
                 return np.array([3])
-            elif angle < -0.1:
+            elif angle > -0.1:
                 return np.array([1])
             else:
                 return np.array([0])

@@ -1,35 +1,27 @@
-from amateur_pt import *
+from amateur_pt import AmateurTeacher, transfer_knowledge_and_save
 from typing import Optional
 import numpy as np
-from gymnasium.envs.classic_control import CartPoleEnv
+from gymnasium.envs.toy_text import CliffWalkingEnv
 from torch import optim
 from torch.optim import lr_scheduler
-import random
 
 
-class CartPoleAmateurTeacher(AmateurTeacher):
+class CliffWalkingAmateurTeacher(AmateurTeacher):
     def __init__(self, seed: Optional[int] = None):
         super().__init__(seed)
-        self.observation_space = CartPoleEnv().observation_space
-        self.env_id = "CartPole-v1"
+        self.observation_space = CliffWalkingEnv().observation_space
+        self.action_space = CliffWalkingEnv().action_space
+        self.env_id = "CliffWalking-v0"
 
     def get_action(self, observation: np.ndarray) -> np.ndarray:
-        if observation[2] < 0:
-            desired_action = 0
-        else:
-            desired_action = 1
-
-        if random.random() < 0.75:
-            return desired_action
-        else:
-            return 1 - desired_action
+        return 1
 
     def generate_observation(self, seed: Optional[int] = None) -> np.ndarray:
         return self.observation_space.sample()
 
 
 if __name__ == "__main__":
-    teacher = CartPoleAmateurTeacher(seed=0)
+    teacher = CliffWalkingAmateurTeacher(seed=0)
     training_kwargs = dict(
         epochs=100,
         teacher_interactions_per_epoch=int(4e5),
