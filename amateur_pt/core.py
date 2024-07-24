@@ -12,6 +12,7 @@ from stable_baselines3.common.monitor import Monitor
 from stable_baselines3.common.type_aliases import PolicyPredictor
 from gymnasium import Env
 from scipy.spatial import distance
+from gymnasium.wrappers import ClipAction
 
 
 class AmateurTeacher:
@@ -32,6 +33,11 @@ class AmateurTeacher:
     def generate_sample(self) -> Tuple[np.ndarray, np.ndarray]:
         obs = self.generate_observation(self.seed)
         amateur_action = self.get_action(obs)
+
+        try:
+            amateur_action = self.clipper.action(amateur_action)
+        except:
+            self.clipper = ClipAction(gym.make(self.env_id))
 
         return obs, amateur_action
 
@@ -143,7 +149,7 @@ class AmateurDataset(Dataset):
 
     def __getitem__(self, _) -> Tuple[torch.Tensor, torch.Tensor]:
         x, y = self.teacher.generate_sample()
-        return torch.tensor(x), torch.tensor(y)
+        return torch.tensor(x), torch.tensor(y, dtype=torch.float32)
 
 
 def evaluate_policy(
