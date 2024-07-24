@@ -1,32 +1,28 @@
 from amateur_pt import AmateurTeacher, transfer_knowledge_and_save
 from typing import Optional
 import numpy as np
-from gymnasium.envs.toy_text import CliffWalkingEnv
+from gymnasium.envs.box2d.bipedal_walker import BipedalWalker
 from torch import optim
 from torch.optim import lr_scheduler
 
 
-class CliffWalkingAmateurTeacher(AmateurTeacher):
+class BipedalWalkerAmateurTeacher(AmateurTeacher):
     def __init__(self, seed: Optional[int] = None):
         super().__init__(seed)
-        self.observation_space = CliffWalkingEnv().observation_space
-        self.action_space = CliffWalkingEnv().action_space
-        self.env_id = "CliffWalking-v0"
+        self.observation_space = BipedalWalker().observation_space
+        self.action_space = BipedalWalker().action_space
+        self.env_id = "BipedalWalker-v3"
+        self.state = 1
 
     def get_action(self, observation: np.ndarray) -> np.ndarray:
-        if observation == 36:
-            return 0
-        elif observation < 35 and observation >= 24:
-            return 1
-        else:
-            return 2
+        return np.array([1, -1, 1, -1])
 
     def generate_observation(self, seed: Optional[int] = None) -> np.ndarray:
         return self.observation_space.sample()
 
 
 if __name__ == "__main__":
-    teacher = CliffWalkingAmateurTeacher(seed=0)
+    teacher = BipedalWalkerAmateurTeacher(seed=0)
     training_kwargs = dict(
         epochs=100,
         teacher_interactions_per_epoch=int(4e5),

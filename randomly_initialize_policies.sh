@@ -2,7 +2,7 @@
 set -e
 
 algos=("ppo" "sac" "td3" "a2c")
-envs=("CartPole" "CliffWalking" "HalfCheetah" "Humanoid" "LunarLander" "MountainCar" "Walker2D")
+envs=("Pendulum" "BipedalWalker" "HalfCheetah" "Humanoid" "LunarLander" "MountainCar" "Walker2D")
 
 # For loop
 for algo in "${algos[@]}"

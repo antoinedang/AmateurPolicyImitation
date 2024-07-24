@@ -28,7 +28,7 @@ argparser.add_argument(
 argparser.add_argument(
     "--env",
     type=str,
-    help="Environment ID to train on (e.g. CartPole-v1)",
+    help="Environment ID to train on (e.g. Pendulum-v1)",
 )
 argparser.add_argument(
     "--n-steps",

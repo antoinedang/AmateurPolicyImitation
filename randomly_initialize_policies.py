@@ -47,7 +47,7 @@ if __name__ == "__main__":
     if args.kwargs is None:
         args.kwargs = dict()
 
-    model = MODEL_TYPES[args.algo.upper()]("MlpPolicy", "CartPole-v1", **args.kwargs)
+    model = MODEL_TYPES[args.algo.upper()]("MlpPolicy", "Pendulum-v1", **args.kwargs)
 
     policy = model.policy.to("cpu")
 

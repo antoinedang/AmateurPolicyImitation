@@ -11,7 +11,7 @@ class LunarLanderAmateurTeacher(AmateurTeacher):
     def __init__(self, seed: Optional[int] = None):
         super().__init__(seed)
         self.observation_space = LunarLander().observation_space
-        self.env_id = "LunarLander-v2"
+        self.env_id = "LunarLanderContinuous-v2"
 
     def get_action(self, observation: np.ndarray) -> np.ndarray:
         x, y, vx, vy, angle, vangle, contact0, contact1 = observation
@@ -19,33 +19,27 @@ class LunarLanderAmateurTeacher(AmateurTeacher):
         if x > 0.05:
             # need to move right (lean slightly right)
             if angle > 0.4:
-                return np.array([3])
+                return np.array([0, 1])
             elif angle < 0:
-                return np.array([1])
+                return np.array([0, -1])
             else:
-                if random.random() < 0.75:
-                    return np.array([2])
-                else:
-                    return np.array([0])
+                return np.array([0.75, 0])
         elif x < -0.05:
             # need to move right (lean slightly right)
             if angle > 0:
-                return np.array([3])
+                return np.array([0, 1])
             elif angle < -0.4:
-                return np.array([1])
+                return np.array([0, -1])
             else:
-                if random.random() < 0.75:
-                    return np.array([2])
-                else:
-                    return np.array([0])
+                return np.array([0.75, 0])
 
         else:
             if angle > 0.1:
-                return np.array([3])
+                return np.array([0, 1])
             elif angle < -0.1:
-                return np.array([1])
+                return np.array([0, -1])
             else:
-                return np.array([0])
+                return np.array([0, 0])
 
     def generate_observation(self, seed: Optional[int] = None) -> np.ndarray:
         return self.observation_space.sample()

@@ -11,7 +11,7 @@ class LunarLanderAmateurTeacher(AmateurTeacher):
         super().__init__(seed)
         self.observation_space = LunarLander().observation_space
         self.action_space = LunarLander().action_space
-        self.env_id = "LunarLander-v2"
+        self.env_id = "LunarLanderContinuous-v2"
 
     def get_action(self, observation: np.ndarray) -> np.ndarray:
         return self.action_space.sample()

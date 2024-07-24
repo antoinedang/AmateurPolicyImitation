@@ -1,35 +1,28 @@
 from amateur_pt import *
 from typing import Optional
 import numpy as np
-from gymnasium.envs.classic_control import CartPoleEnv
+import random
+from gymnasium.envs.classic_control import PendulumEnv
 from torch import optim
 from torch.optim import lr_scheduler
-import random
 
 
-class CartPoleAmateurTeacher(AmateurTeacher):
+class PendulumAmateurTeacher(AmateurTeacher):
     def __init__(self, seed: Optional[int] = None):
         super().__init__(seed)
-        self.observation_space = CartPoleEnv().observation_space
-        self.env_id = "CartPole-v1"
+        self.observation_space = PendulumEnv().observation_space
+        self.action_space = PendulumEnv().action_space
+        self.env_id = "Pendulum-v1"
 
     def get_action(self, observation: np.ndarray) -> np.ndarray:
-        if observation[2] < 0:
-            desired_action = 0
-        else:
-            desired_action = 1
-
-        if random.random() < 0.75:
-            return desired_action
-        else:
-            return 1 - desired_action
+        return self.action_space.sample()
 
     def generate_observation(self, seed: Optional[int] = None) -> np.ndarray:
         return self.observation_space.sample()
 
 
 if __name__ == "__main__":
-    teacher = CartPoleAmateurTeacher(seed=0)
+    teacher = PendulumAmateurTeacher(seed=0)
     training_kwargs = dict(
         epochs=100,
         teacher_interactions_per_epoch=int(4e5),

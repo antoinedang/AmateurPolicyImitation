@@ -1,16 +1,19 @@
 #!/bin/bash
 set -e
 
-policy_type="pure_random"
+policy_types=("pure_random" "good" "bad")
 algos=("ppo" "sac" "td3" "a2c")
-envs=("CartPole" "CliffWalking" "HalfCheetah" "Humanoid" "LunarLander" "MountainCar" "Walker2D")
+envs=("Pendulum" "BipedalWalker" "LunarLander" "MountainCar") #"HalfCheetah" "Humanoid" "Walker2D"
 
 # For loop
 for algo in "${algos[@]}"
 do
     for env in "${envs[@]}"
     do
-        echo "python3 policies/$env/$policy_type.py --algo $algo"
-        python3 policies/$env/$policy_type.py --algo $algo
+        for policy_type in "${policy_types[@]}"
+        do
+            echo "python3 policies/$env/$policy_type.py --algo $algo"
+            python3 policies/$env/$policy_type.py --algo $algo
+        done
     done
 done

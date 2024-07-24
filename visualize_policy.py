@@ -5,8 +5,8 @@ from stable_baselines3.common.monitor import Monitor
 import gymnasium as gym
 
 MODEL_TYPE = SAC
-POLICY_NAME = "CartPole"
-POLICY_TYPE = "good"  # bad, good, pure_random
+POLICY_NAME = "BipedalWalker"
+POLICY_TYPE = "bad"  # bad, good, pure_random
 
 USE_POLICY_CLASS = True
 ENV_ID = "MountainCarContinuous-v0"
@@ -40,11 +40,6 @@ while True:
         while not done:
             action, _ = agent.predict([obs], deterministic=True)
             action = action[0]
-            if hasattr(action, "__len__") and len(action) == 1:
-                if isinstance(env.action_space, gym.spaces.Discrete):
-                    action = int(action)
-                else:
-                    action = float(action)
             try:
                 obs, reward, done, _, _ = env.step(action)
             except:
