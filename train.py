@@ -9,6 +9,8 @@ from stable_baselines3.common.vec_env import VecMonitor, DummyVecEnv, VecCheckNa
 import argparse
 import gymnasium as gym
 from amateur_pt import *
+import torch
+import time
 
 ###########################
 ##   ARGUMENT  PARSING   ##
@@ -21,19 +23,16 @@ argparser.add_argument(
 argparser.add_argument(
     "--init",
     type=str,
-    default=10,
-    help="Path to checkpoint to continue training from (must point to .zip file, without the .zip extension in the path)",
+    help="Path to checkpoint to continue training from (torch state dict file)",
 )
 argparser.add_argument(
     "--env",
     type=str,
-    default=None,
     help="Environment ID to train on (e.g. CartPole-v1)",
 )
 argparser.add_argument(
     "--n-steps",
     type=int,
-    default=None,
     help="Total timesteps to train policy for, per randomization factor (can do less if reward threshold is reached early)",
 )
 
@@ -59,6 +58,8 @@ config_json_path = os.path.dirname(INITIAL_POLICY) + "/config.json"
 config = json.load(open(config_json_path, "r"))
 policy_kwargs = config[args.algo.upper()]["policy_kwargs"]
 algo_kwargs = config[args.algo.upper()]["algo_kwargs"]
+
+wall_clock_log_path = os.path.dirname(INITIAL_POLICY) + "/total_training_seconds.txt"
 
 ##########################
 ##  ENVIRONMENT  SETUP  ##
@@ -104,6 +105,8 @@ eval_callback = EvalCallback(
     verbose=0,
 )
 
+training_start_time = time.time()
+
 model.learn(
     total_timesteps=TOTAL_TIMESTEPS,
     callback=[checkpoint_callback, eval_callback],
@@ -111,3 +114,9 @@ model.learn(
     reset_num_timesteps=True,
     progress_bar=True,
 )
+
+total_training_time = time.time() - training_start_time
+
+with open(wall_clock_log_path, "w+") as f:
+    f.write(str(total_training_time) + " total training time (seconds)\n")
+    f.write(str(TOTAL_TIMESTEPS / total_training_time) + " steps/second (average)\n")
