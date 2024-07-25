@@ -9,8 +9,8 @@ from torch.optim import lr_scheduler
 class LunarLanderAmateurTeacher(AmateurTeacher):
     def __init__(self, seed: Optional[int] = None):
         super().__init__(seed)
-        self.observation_space = LunarLander().observation_space
-        self.action_space = LunarLander().action_space
+        self.observation_space = LunarLander(continuous=True).observation_space
+        self.action_space = LunarLander(continuous=True).action_space
         self.env_id = "LunarLanderContinuous-v2"
 
     def get_action(self, observation: np.ndarray) -> np.ndarray:

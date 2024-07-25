@@ -10,7 +10,7 @@ import random
 class LunarLanderAmateurTeacher(AmateurTeacher):
     def __init__(self, seed: Optional[int] = None):
         super().__init__(seed)
-        self.observation_space = LunarLander().observation_space
+        self.observation_space = LunarLander(continuous=True).observation_space
         self.env_id = "LunarLanderContinuous-v2"
 
     def get_action(self, observation: np.ndarray) -> np.ndarray:
