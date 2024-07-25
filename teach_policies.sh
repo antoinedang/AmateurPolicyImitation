@@ -3,8 +3,9 @@ set -e
 
 policy_types=("pure_random" "good" "bad")
 algos=("ppo" "sac" "td3" "a2c")
-#"Pendulum" "BipedalWalker"
-envs=("LunarLander" "MountainCar") #"HalfCheetah" "Humanoid" "Walker2D"
+# DONE: "Pendulum" "BipedalWalker"
+envs=("LunarLander" "MountainCar") 
+# TODO: #"HalfCheetah" "Humanoid" "Walker2D"
 
 # For loop
 for algo in "${algos[@]}"
