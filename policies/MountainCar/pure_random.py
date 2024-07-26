@@ -1,7 +1,7 @@
 from amateur_pt import *
 from typing import Optional
 import numpy as np
-from gymnasium.envs.classic_control import MountainCarEnv
+from gymnasium.envs.classic_control import Continuous_MountainCarEnv
 from torch import optim
 from torch.optim import lr_scheduler
 
@@ -9,8 +9,8 @@ from torch.optim import lr_scheduler
 class MountainCarAmateurTeacher(AmateurTeacher):
     def __init__(self, seed: Optional[int] = None):
         super().__init__(seed)
-        self.observation_space = MountainCarEnv().observation_space
-        self.action_space = MountainCarEnv().action_space
+        self.observation_space = Continuous_MountainCarEnv().observation_space
+        self.action_space = Continuous_MountainCarEnv().action_space
         self.env_id = "MountainCarContinuous-v0"
 
     def get_action(self, observation: np.ndarray) -> np.ndarray:

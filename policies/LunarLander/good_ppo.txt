@@ -6,3 +6,6 @@ Un-initialized student average reward: -271.9598711
 Un-initialized student std. reward: 68.89293611078344
 Un-initialized student class balance score: 0.0021867723522825833
 
+Initialized student average reward: -2866.8709152
+Initialized student std. reward: 2370.3901667374457
+Initialized student class balance score: 0.00039281460462642646
