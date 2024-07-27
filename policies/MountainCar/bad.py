@@ -1,7 +1,7 @@
 from amateur_pt import *
 from typing import Optional
 import numpy as np
-from gymnasium.envs.classic_control.continuous_mountain_car import (
+from gymnasium.envs.classic_control import (
     Continuous_MountainCarEnv,
 )
 from torch import optim

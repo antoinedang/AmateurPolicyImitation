@@ -1,0 +1,11 @@
+Teacher average reward: -462.9329225
+Teacher std. reward: 94.93341182305247
+Teacher class balance score: 0.0008084746947046369
+
+Un-initialized student average reward: -1632.0377445
+Un-initialized student std. reward: 220.25315296162438
+Un-initialized student class balance score: 1.9966720342636107e-05
+
+Initialized student average reward: -1410.4446142000002
+Initialized student std. reward: 243.0832267148129
+Initialized student class balance score: 0.0
