@@ -59,7 +59,7 @@ config = json.load(open(config_json_path, "r"))
 policy_kwargs = config[args.algo.upper()]["policy_kwargs"]
 algo_kwargs = config[args.algo.upper()]["algo_kwargs"]
 
-wall_clock_log_path = os.path.dirname(INITIAL_POLICY) + "/total_training_seconds.txt"
+wall_clock_log_path = log_dir + "/total_training_seconds.txt"
 
 ##########################
 ##  ENVIRONMENT  SETUP  ##
