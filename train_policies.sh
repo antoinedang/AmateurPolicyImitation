@@ -14,8 +14,13 @@ do
         for tuple in "${env_configs[@]}"
         do
             IFS=',' read -r envid steps policy_folder <<< "$tuple"
-            echo "python3 train.py --algo $algo --env $envid --n-steps $steps --init policies/$policy_folder/"${policy_type}"_$algo.pt"
-            python3 train.py --algo $algo --env $envid --n-steps $steps --init policies/$policy_folder/${policy_type}_$algo.pt
+            if [ "$policy_type" == "xavier" ] || [ "$policy_type" == "orthogonal" ] || [ "$policy_type" == "he" ]; then
+                echo "python3 train.py --algo $algo --env $envid --n-steps $steps --init policies/$policy_folder/"${policy_type}"_"${algo}"_initialization.pt"
+                python3 train.py --algo $algo --env $envid --n-steps $steps --init policies/$policy_folder/${policy_type}_${algo}_initialization.pt
+            else
+                echo "python3 train.py --algo $algo --env $envid --n-steps $steps --init policies/$policy_folder/"${policy_type}"_$algo.pt"
+                python3 train.py --algo $algo --env $envid --n-steps $steps --init policies/$policy_folder/${policy_type}_$algo.pt
+            fi
         done
     done
 done
