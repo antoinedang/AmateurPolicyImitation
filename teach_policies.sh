@@ -1,13 +1,8 @@
 #!/bin/bash
 set -e
 
-python3 policies/MountainCar/pure_random.py --algo ppo
-python3 policies/MountainCar/good.py --algo ppo
-python3 policies/MountainCar/bad.py --algo ppo
-
 policy_types=("pure_random" "good" "bad")
-# "ppo"
-algos=("sac" "td3" "a2c")
+algos=("ppo" "sac" "td3" "a2c")
 envs=("MountainCar" "Pendulum" "BipedalWalker" "LunarLander") 
 # TODO: #"HalfCheetah" "Humanoid" "Walker2D"
 

@@ -1,7 +1,6 @@
 #!/bin/bash
 set -e
 
-
 policy_types=("xavier" "orthogonal" "he" "good" "bad" "pure_random")
 algos=("ppo" "sac" "td3" "a2c")
 env_configs=("Pendulum-v1,300_000,Pendulum" "BipedalWalker-v3,100_000,BipedalWalker" "LunarLanderContinuous-v2,300_000,LunarLander" "MountainCarContinuous-v0,300_000,MountainCar")
