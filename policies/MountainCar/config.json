@@ -2,25 +2,25 @@
     "PPO": {
         "additional_kwargs": {
         },
-        "policy_args": {
+        "policy_kwargs": {
         }
     },
     "SAC": {
         "additional_kwargs": {
         },
-        "policy_args": {
+        "policy_kwargs": {
         }
     },
     "TD3": {
         "additional_kwargs": {
         },
-        "policy_args": {
+        "policy_kwargs": {
         }
     },
     "A2C": {
         "additional_kwargs": {
         },
-        "policy_args": {
+        "policy_kwargs": {
         }
     }
 }
