@@ -4,6 +4,7 @@ import pathlib
 import torch
 import os
 from stable_baselines3 import PPO, SAC, TD3, A2C
+import time
 
 MODEL_TYPES = {
     "PPO": PPO,
@@ -53,7 +54,9 @@ def transfer_knowledge_and_save(
         f.write(f"Un-initialized student std. reward: {std_reward}\n")
         f.write(f"Un-initialized student class balance score: {class_imbalance}\n\n")
 
+    start_teaching_time = time.time()
     pre_trained_state_dict = teacher.train(student, batch_size=64, **training_kwargs)
+    total_teaching_time = time.time() - start_teaching_time
     student.policy.load_state_dict(pre_trained_state_dict)
 
     avg_reward, std_reward, class_imbalance = evaluate_policy(env_id, student, teacher)
@@ -63,7 +66,10 @@ def transfer_knowledge_and_save(
     with open(out_path.with_suffix(".txt"), "a+") as f:
         f.write(f"Initialized student average reward: {avg_reward}\n")
         f.write(f"Initialized student std. reward: {std_reward}\n")
-        f.write(f"Initialized student class balance score: {class_imbalance}\n")
+        f.write(f"Initialized student class balance score: {class_imbalance}\n\n")
 
     torch.save(pre_trained_state_dict, out_path)
     print(f"Pre-trained policy state dict saved to {out_path}.pt")
+
+    with open(out_path.with_suffix(".txt"), "a+") as f:
+        f.write(f"Total time teaching: {total_teaching_time} seconds")
