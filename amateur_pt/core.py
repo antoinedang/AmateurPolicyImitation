@@ -38,6 +38,7 @@ class AmateurTeacher:
             amateur_action = self.clipper.action(amateur_action)
         except:
             self.clipper = ClipAction(gym.make(self.env_id))
+            amateur_action = self.clipper.action(amateur_action)
 
         return obs, amateur_action
 

@@ -1,0 +1,2 @@
+3913.889727830887 total training time (seconds)
+76.65009002853607 steps/second (average)

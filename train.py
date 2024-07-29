@@ -68,8 +68,8 @@ wall_clock_log_path = log_dir + "/total_training_seconds.txt"
 env = VecMonitor(DummyVecEnv([lambda: gym.make(ENV_ID)]))
 eval_env = VecMonitor(DummyVecEnv([lambda: gym.make(ENV_ID)]))
 
-env = VecCheckNan(env, raise_exception=True)
-eval_env = VecCheckNan(eval_env, raise_exception=True)
+env = VecCheckNan(env, raise_exception=False)
+eval_env = VecCheckNan(eval_env, raise_exception=False)
 
 ##########################
 ## MODEL INITIALIZATION ##
