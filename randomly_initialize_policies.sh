@@ -13,6 +13,7 @@ do
     for env in "${envs[@]}"
     do
         if [ "$starting_parameter_combo" != "$algo,$env" ] && [ "$starting_parameter_combo" != "" ]; then
+            starting_parameter_combo=""
             continue
         fi
         

@@ -19,6 +19,7 @@ do
             IFS=',' read -r envid steps policy_folder <<< "$tuple"
 
             if [ "$starting_parameter_combo" != "$algo,$policy_type,$policy_folder" ] && [ "$starting_parameter_combo" != "" ]; then
+                starting_parameter_combo=""
                 continue
             fi
             

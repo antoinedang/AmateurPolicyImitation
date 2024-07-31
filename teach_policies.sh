@@ -6,7 +6,7 @@ policy_types=("pure_random" "good" "bad")
 envs=("MountainCar" "Pendulum" "BipedalWalker" "LunarLander") 
 # TODO: "HalfCheetah" "Humanoid" "Walker2D"
 
-starting_parameter_combo="ppo,pure_random,MountainCar" # inclusive
+starting_parameter_combo="ppo,pure_random,Pendulum" # inclusive
 ending_parameter_combo="sac,pure_random,MountainCar" # exclusive
 
 # For loop
@@ -18,6 +18,7 @@ do
         do
 
             if [ "$starting_parameter_combo" != "$algo,$policy_type,$env" ] && [ "$starting_parameter_combo" != "" ]; then
+                starting_parameter_combo=""
                 continue
             fi
             
