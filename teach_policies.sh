@@ -21,7 +21,7 @@ do
                 continue
             fi
             
-            if [ "$ending_parameter_combo" != "$algo,$policy_type,$env" ] && [ "$ending_parameter_combo" != "" ]; then
+            if [ "$ending_parameter_combo" == "$algo,$policy_type,$env" ]; then
                 exit 0
             fi
 

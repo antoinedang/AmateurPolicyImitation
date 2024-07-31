@@ -4,7 +4,7 @@ set -e
 algos=("ppo" "sac" "td3" "a2c")
 # "Pendulum" "BipedalWalker" "LunarLander" "MountainCar"
 envs=("HalfCheetah" "Humanoid" "Walker2D")
-starting_parameter_combo="sac,Pendulum" # inclusive
+starting_parameter_combo="" # inclusive
 ending_parameter_combo="" # non-inclusive
 
 # For loop
@@ -16,7 +16,7 @@ do
             continue
         fi
         
-        if [ "$ending_parameter_combo" != "$algo,$env" ] && [ "$ending_parameter_combo" != "" ]; then
+        if [ "$ending_parameter_combo" == "$algo,$env" ]; then
             exit 0
         fi
 
