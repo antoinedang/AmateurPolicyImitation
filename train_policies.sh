@@ -1,12 +1,13 @@
 #!/bin/bash
 set -e
 
-policy_types=("xavier" "orthogonal" "he" "good" "bad" "pure_random")
 algos=("ppo" "sac" "td3" "a2c")
+policy_types=("xavier" "orthogonal" "he" "good" "bad" "pure_random")
 env_configs=("Pendulum-v1,300_000,Pendulum" "BipedalWalker-v3,500_000,BipedalWalker" "LunarLanderContinuous-v2,300_000,LunarLander" "MountainCarContinuous-v0,300_000,MountainCar")
 # TODO: "Walker2D-v4,1_000_000,Walker2D" "HalfCheetah-v4,1_000_000,HalfCheetah" "Humanoid-v4,2_000_000,Humanoid"
 
-starting_parameter_combo="xavier,sac,Pendulum"
+starting_parameter_combo="ppo,good,Pendulum" # inclusive
+ending_parameter_combo="sac,xavier,Pendulum" # exclusive
 
 # For loop
 for algo in "${algos[@]}"
@@ -17,8 +18,12 @@ do
         do
             IFS=',' read -r envid steps policy_folder <<< "$tuple"
 
-            if [ "$starting_parameter_combo" != "$policy_type,$algo,$policy_folder" ] && [ "$starting_parameter_combo" != "" ]; then
+            if [ "$starting_parameter_combo" != "$algo,$policy_type,$policy_folder" ] && [ "$starting_parameter_combo" != "" ]; then
                 continue
+            fi
+            
+            if [ "$ending_parameter_combo" != "$algo,$policy_type,$policy_folder" ] && [ "$ending_parameter_combo" != "" ]; then
+                exit 0
             fi
 
             starting_parameter_combo=""

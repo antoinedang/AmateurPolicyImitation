@@ -1,18 +1,30 @@
 #!/bin/bash
 set -e
 
-policy_types=("pure_random" "good" "bad")
 algos=("ppo" "sac" "td3" "a2c")
+policy_types=("pure_random" "good" "bad")
 envs=("MountainCar" "Pendulum" "BipedalWalker" "LunarLander") 
-# TODO: #"HalfCheetah" "Humanoid" "Walker2D"
+# TODO: "HalfCheetah" "Humanoid" "Walker2D"
+
+starting_parameter_combo="ppo,pure_random,MountainCar" # inclusive
+ending_parameter_combo="sac,pure_random,MountainCar" # exclusive
 
 # For loop
 for algo in "${algos[@]}"
 do
-    for env in "${envs[@]}"
+    for policy_type in "${policy_types[@]}"
     do
-        for policy_type in "${policy_types[@]}"
+        for env in "${envs[@]}"
         do
+
+            if [ "$starting_parameter_combo" != "$algo,$policy_type,$env" ] && [ "$starting_parameter_combo" != "" ]; then
+                continue
+            fi
+            
+            if [ "$ending_parameter_combo" != "$algo,$policy_type,$env" ] && [ "$ending_parameter_combo" != "" ]; then
+                exit 0
+            fi
+
             echo "python3 policies/$env/$policy_type.py --algo $algo"
             python3 policies/$env/$policy_type.py --algo $algo
         done
