@@ -27,6 +27,8 @@ args = argparser.parse_args()
 
 plt.figure(figsize=(10, 5))
 
+num_curves = 0
+
 for eval_file, name, color in zip(
     args.eval_files, args.names, generate_distinct_colors(len(args.eval_files))
 ):
@@ -34,7 +36,12 @@ for eval_file, name, color in zip(
     timesteps = []
     std_rewards = []
 
-    evaluations = np.load(eval_file)
+    try:
+        evaluations = np.load(eval_file)
+        num_curves += 1
+    except FileNotFoundError:
+        print(f"WARN: File {eval_file} not found.")
+        continue
     timesteps = evaluations["timesteps"]
     avg_rewards = np.mean(evaluations["results"], axis=1)
     std_rewards = np.std(evaluations["results"], axis=1)
@@ -48,6 +55,10 @@ for eval_file, name, color in zip(
         color=color,
         alpha=0.2,
     )
+
+if num_curves == 0:
+    print("Exiting: No valid evaluation files found.")
+    exit(0)
 
 plt.xlabel("Steps")
 plt.ylabel("Reward")

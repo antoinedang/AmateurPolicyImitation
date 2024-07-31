@@ -45,15 +45,11 @@ class AmateurTeacher:
     def train(
         self,
         student: BaseAlgorithm,
-        batch_size: int = 64,
-        epochs: int = 1000,
-        teacher_interactions_per_epoch: int = int(4e4),
-        make_optimizer: Callable[
-            [Iterator[torch.nn.Parameter]], optim.Optimizer
-        ] = lambda params: optim.Adam(params, lr=1.0),
-        make_scheduler: Callable[
-            [optim.Optimizer], lr_scheduler.LRScheduler
-        ] = lambda optimizer: lr_scheduler.StepLR(optimizer, step_size=1, gamma=0.7),
+        batch_size: int,
+        epochs: int,
+        teacher_interactions_per_epoch: int,
+        make_optimizer: Callable[[Iterator[torch.nn.Parameter]], optim.Optimizer],
+        make_scheduler: Callable[[optim.Optimizer], lr_scheduler.LRScheduler],
         log_interval: float = 100,
         device: str = "auto",
     ) -> Dict[str, Any]:

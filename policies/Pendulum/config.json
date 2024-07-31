@@ -7,10 +7,8 @@
     },
     "SAC": {
         "algo_kwargs": {
-            "learning_rate": 1e-5
         },
         "policy_kwargs": {
-            "log_std_init": -1.0
         }
     },
     "TD3": {

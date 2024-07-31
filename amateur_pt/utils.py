@@ -5,6 +5,8 @@ import torch
 import os
 from stable_baselines3 import PPO, SAC, TD3, A2C
 import time
+from torch import optim
+from torch.optim import lr_scheduler
 
 MODEL_TYPES = {
     "PPO": PPO,
@@ -14,13 +16,24 @@ MODEL_TYPES = {
 }
 
 
+TRAINING_KWARGS = dict(
+    epochs=100,
+    teacher_interactions_per_epoch=int(4e5),
+    make_optimizer=lambda params: optim.Adam(params, lr=0.001, weight_decay=1e-4),
+    make_scheduler=lambda optimizer: lr_scheduler.StepLR(
+        optimizer, step_size=1, gamma=1.0
+    ),
+    log_interval=100,
+    device="auto",
+)
+ALGO_KWARGS = dict()
+
+
 def transfer_knowledge_and_save(
     teacher: AmateurTeacher,
-    env_id: str,
-    training_kwargs: dict,
-    algo_kwargs: dict,
     file: str,
 ):
+    env_id = teacher.env_id
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--algo",
@@ -44,7 +57,7 @@ def transfer_knowledge_and_save(
         f.write(f"Teacher std. reward: {std_reward}\n")
         f.write(f"Teacher class balance score: {class_imbalance}\n\n")
 
-    student = MODEL_TYPES[args.algo.upper()]("MlpPolicy", env_id, **algo_kwargs)
+    student = MODEL_TYPES[args.algo.upper()]("MlpPolicy", env_id, **ALGO_KWARGS)
     avg_reward, std_reward, class_imbalance = evaluate_policy(env_id, student, teacher)
     print("Un-initialized student average reward: {}".format(avg_reward))
     print("Un-initialized student std. reward: {}".format(std_reward))
@@ -55,7 +68,7 @@ def transfer_knowledge_and_save(
         f.write(f"Un-initialized student class balance score: {class_imbalance}\n\n")
 
     start_teaching_time = time.time()
-    pre_trained_state_dict = teacher.train(student, batch_size=64, **training_kwargs)
+    pre_trained_state_dict = teacher.train(student, batch_size=64, **TRAINING_KWARGS)
     total_teaching_time = time.time() - start_teaching_time
     student.policy.load_state_dict(pre_trained_state_dict)
 
