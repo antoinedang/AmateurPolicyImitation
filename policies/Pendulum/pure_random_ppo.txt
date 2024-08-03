@@ -1,0 +1,13 @@
+Teacher average reward: -1169.6413522
+Teacher std. reward: 339.1663394561254
+Teacher class balance score: 1.9992347823063026e-05
+
+Un-initialized student average reward: -1175.3186429000002
+Un-initialized student std. reward: 253.39327392006948
+Un-initialized student class balance score: 2.01121559884632e-05
+
+Initialized student average reward: -1211.9339501
+Initialized student std. reward: 279.5672026948645
+Initialized student class balance score: 7.704155790997902e-07
+
+Total time teaching: 3294.754080057144 seconds
