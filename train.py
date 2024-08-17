@@ -11,6 +11,7 @@ import gymnasium as gym
 from amateur_pt import *
 import torch
 import time
+from model_normalization import normalize_weights
 
 ###########################
 ##   ARGUMENT  PARSING   ##
@@ -34,6 +35,11 @@ argparser.add_argument(
     "--n-steps",
     type=int,
     help="Total timesteps to train policy for, per randomization factor (can do less if reward threshold is reached early)",
+)
+argparser.add_argument(
+    "--normalize",
+    action="store_true",
+    help="Pass flag to normalize model weights before training.",
 )
 
 args = argparser.parse_args()
@@ -85,7 +91,11 @@ model = MODEL(
     **algo_kwargs,
 )
 
-model.policy.load_state_dict(torch.load(INITIAL_POLICY))
+state_dict = torch.load(INITIAL_POLICY)
+if args.normalize:
+    state_dict = normalize_weights(state_dict)
+
+model.policy.load_state_dict(state_dict)
 
 checkpoint_callback = CheckpointCallback(
     save_freq=CHECKPOINT_FREQ,

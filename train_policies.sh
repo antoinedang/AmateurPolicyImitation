@@ -9,6 +9,8 @@ env_configs=("Pendulum-v1,300_000,Pendulum" "BipedalWalker-v3,500_000,BipedalWal
 starting_parameter_combo="ppo,good,Pendulum" # inclusive
 ending_parameter_combo="sac,xavier,Pendulum" # exclusive
 
+normalize="--normalize" # make empty to disable normalization
+
 # For loop
 for algo in "${algos[@]}"
 do
@@ -30,11 +32,11 @@ do
             starting_parameter_combo=""
 
             if [ "$policy_type" == "xavier" ] || [ "$policy_type" == "orthogonal" ] || [ "$policy_type" == "he" ]; then
-                echo "python3 train.py --algo $algo --env $envid --n-steps $steps --init policies/$policy_folder/"${policy_type}"_"${algo}"_initialization.pt"
-                python3 train.py --algo $algo --env $envid --n-steps $steps --init policies/$policy_folder/${policy_type}_${algo}_initialization.pt
+                echo "python3 train.py --algo $algo --env $envid --n-steps $steps --init policies/$policy_folder/"${policy_type}"_"${algo}"_initialization.pt $normalize"
+                python3 train.py --algo $algo --env $envid --n-steps $steps --init policies/$policy_folder/${policy_type}_${algo}_initialization.pt $normalize
             else
-                echo "python3 train.py --algo $algo --env $envid --n-steps $steps --init policies/$policy_folder/"${policy_type}"_$algo.pt"
-                python3 train.py --algo $algo --env $envid --n-steps $steps --init policies/$policy_folder/${policy_type}_$algo.pt
+                echo "python3 train.py --algo $algo --env $envid --n-steps $steps --init policies/$policy_folder/"${policy_type}"_$algo.pt $normalize"
+                python3 train.py --algo $algo --env $envid --n-steps $steps --init policies/$policy_folder/${policy_type}_$algo.pt $normalize
             fi
         done
     done
