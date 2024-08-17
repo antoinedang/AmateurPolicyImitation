@@ -1,6 +1,8 @@
 import os
 import sys
 
+python_bin = "C:/Users/antoi/.pyenv/pyenv-win/versions/3.11.0/python.exe"
+
 algos = ["ppo", "sac", "td3", "a2c"]
 policy_types = ["xavier", "orthogonal", "he", "good", "bad", "pure_random"]
 env_configs = [
@@ -45,7 +47,7 @@ def main():
                 else:
                     init_file = f"policies/{policy_folder}/{policy_type}_{algo}.pt"
 
-                command = f"python3 train.py --algo {algo} --env {envid} --n-steps {steps} --init {init_file} {normalize}"
+                command = f"{python_bin} train.py --algo {algo} --env {envid} --n-steps {steps} --init {init_file} {normalize}"
                 print(command)
                 os.system(command)
 

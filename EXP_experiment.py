@@ -1,13 +1,15 @@
 import os
 import subprocess
 
+python_bin = "C:/Users/antoi/.pyenv/pyenv-win/versions/3.11.0/python.exe"
+
 
 def main():
     # List of scripts to run
     scripts = [
-        # "python3 EXP_randomly_initialize_policies.py",
-        # "python3 EXP_teach_policies.py",
-        "python3 EXP_train_policies.py",
+        # f"{python_bin} EXP_randomly_initialize_policies.py",
+        # f"{python_bin} EXP_teach_policies.py",
+        f"{python_bin} EXP_train_policies.py",
     ]
 
     for script in scripts:

@@ -1,5 +1,7 @@
 import os
 
+python_bin = "C:/Users/antoi/.pyenv/pyenv-win/versions/3.11.0/python.exe"
+
 envs = [
     "MountainCar",
     "Pendulum",
@@ -16,7 +18,7 @@ def main():
     for env in envs:
         for algo in algos:
             command = (
-                f"python3 plot_evaluations.py "
+                f"{python_bin} plot_evaluations.py "
                 f"policies/{env}/good_{algo}/evaluations.npz "
                 f"policies/{env}/pure_random_{algo}/evaluations.npz "
                 f"policies/{env}/bad_{algo}/evaluations.npz "

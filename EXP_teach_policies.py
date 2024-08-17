@@ -1,6 +1,8 @@
 import os
 import sys
 
+python_bin = "C:/Users/antoi/.pyenv/pyenv-win/versions/3.11.0/python.exe"
+
 algos = ["ppo", "sac", "td3", "a2c"]
 policy_types = ["pure_random", "good", "bad"]
 envs = ["MountainCar", "Pendulum", "BipedalWalker", "LunarLander"]
@@ -29,7 +31,7 @@ def main():
                 if ending_parameter_combo == current_combo:
                     sys.exit(0)
 
-                command = f"python3 policies/{env}/{policy_type}.py --algo {algo}"
+                command = f"{python_bin} policies/{env}/{policy_type}.py --algo {algo}"
                 print(command)
                 os.system(command)
 
