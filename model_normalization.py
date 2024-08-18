@@ -19,4 +19,4 @@ def normalize_weights(state_dict, target_magnitude=0.3):
             # If the entry is not a tensor (e.g., a scalar), just copy it as is
             normalized_state_dict[key] = weights
 
-    return state_dict
+    return normalized_state_dict
