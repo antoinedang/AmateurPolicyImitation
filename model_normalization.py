@@ -8,6 +8,9 @@ def normalize_weights(state_dict, target_magnitude=0.3):
             original_min = weights.min().item()
             weights = weights - original_min  # make minimum 0
             original_max = weights.max().item()
+            if original_max == 0:
+                normalized_state_dict[key] = weights
+                continue
             weights = 2 * (weights / original_max)  # make maximum 2
             weights = weights - 1  # make maximum 1, minimum -1
             weights = (
