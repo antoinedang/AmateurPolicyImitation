@@ -97,13 +97,6 @@ if args.normalize:
 
 model.policy.load_state_dict(state_dict)
 
-checkpoint_callback = CheckpointCallback(
-    save_freq=CHECKPOINT_FREQ,
-    save_path=log_dir,
-    name_prefix="ckpt",
-    verbose=0,
-)
-
 eval_callback = EvalCallback(
     eval_env,
     best_model_save_path=log_dir,
@@ -119,7 +112,7 @@ training_start_time = time.time()
 
 model.learn(
     total_timesteps=TOTAL_TIMESTEPS,
-    callback=[checkpoint_callback, eval_callback],
+    callback=[eval_callback],
     log_interval=1,
     reset_num_timesteps=True,
     progress_bar=True,

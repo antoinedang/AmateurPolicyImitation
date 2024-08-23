@@ -6,10 +6,10 @@ python_bin = "C:/Users/antoi/.pyenv/pyenv-win/versions/3.11.0/python.exe"
 algos = ["ppo", "sac", "td3", "a2c"]
 policy_types = ["xavier", "orthogonal", "he", "good", "bad", "pure_random"]
 env_configs = [
-    "Pendulum-v1,300_000,Pendulum",
-    "BipedalWalker-v3,500_000,BipedalWalker",
+    "Pendulum-v1,500_000,Pendulum",
+    "BipedalWalker-v3,1_000_000,BipedalWalker",
     "LunarLanderContinuous-v2,300_000,LunarLander",
-    "MountainCarContinuous-v0,300_000,MountainCar",
+    "MountainCarContinuous-v0,100_000,MountainCar",
 ]
 # TODO: "Walker2D-v4,1_000_000,Walker2D" "HalfCheetah-v4,1_000_000,HalfCheetah" "Humanoid-v4,2_000_000,Humanoid"
 
@@ -34,13 +34,11 @@ def main():
                     starting_parameter_combo != current_combo
                     and starting_parameter_combo != ""
                 ):
-                    starting_parameter_combo = ""
                     continue
+                starting_parameter_combo = ""
 
                 if ending_parameter_combo == current_combo:
                     sys.exit(0)
-
-                starting_parameter_combo = ""
 
                 if policy_type in ["xavier", "orthogonal", "he"]:
                     init_file = f"policies/{policy_folder}/{policy_type}_{algo}_initialization.pt"

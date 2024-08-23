@@ -25,8 +25,8 @@ def main():
                     starting_parameter_combo != f"{algo},{policy_type},{env}"
                     and starting_parameter_combo != ""
                 ):
-                    starting_parameter_combo = ""
                     continue
+                starting_parameter_combo = ""
 
                 if ending_parameter_combo == current_combo:
                     sys.exit(0)

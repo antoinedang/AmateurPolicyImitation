@@ -21,8 +21,8 @@ def main():
                 starting_parameter_combo != current_combo
                 and starting_parameter_combo != ""
             ):
-                starting_parameter_combo = ""
                 continue
+            starting_parameter_combo = ""
 
             if ending_parameter_combo == current_combo:
                 sys.exit(0)
