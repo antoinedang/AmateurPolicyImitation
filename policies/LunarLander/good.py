@@ -39,9 +39,6 @@ class LunarLanderAmateurTeacher(AmateurTeacher):
             else:
                 return np.array([0, 0])
 
-    def generate_observation(self, seed: Optional[int] = None) -> np.ndarray:
-        return self.observation_space.sample()
-
 
 if __name__ == "__main__":
     teacher = LunarLanderAmateurTeacher(seed=0)

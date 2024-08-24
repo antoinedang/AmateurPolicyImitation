@@ -129,7 +129,7 @@ class AmateurTeacher:
         raise NotImplementedError
 
     def generate_observation(self, seed: Optional[int] = None) -> np.ndarray:
-        raise NotImplementedError
+        return self.observation_space.sample()
 
 
 class AmateurDataset(Dataset):

@@ -14,9 +14,6 @@ class HopperAmateurTeacher(AmateurTeacher):
     def get_action(self, observation: np.ndarray) -> np.ndarray:
         return self.action_space.sample()
 
-    def generate_observation(self, seed: Optional[int] = None) -> np.ndarray:
-        return self.observation_space.sample()
-
 
 if __name__ == "__main__":
     teacher = HopperAmateurTeacher(seed=0)

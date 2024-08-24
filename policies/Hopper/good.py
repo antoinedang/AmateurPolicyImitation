@@ -12,10 +12,7 @@ class HopperAmateurTeacher(AmateurTeacher):
         self.env_id = "Hopper-v4"
 
     def get_action(self, observation: np.ndarray) -> np.ndarray:
-        return self.action_space.sample()
-
-    def generate_observation(self, seed: Optional[int] = None) -> np.ndarray:
-        return self.observation_space.sample()
+        height, top_angle, thigh_angle, leg_angle, foot_angle = observation
 
 
 if __name__ == "__main__":

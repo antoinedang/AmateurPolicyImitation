@@ -24,9 +24,6 @@ class PendulumAmateurTeacher(AmateurTeacher):
             else:
                 return np.array([2.0])
 
-    def generate_observation(self, seed: Optional[int] = None) -> np.ndarray:
-        return self.observation_space.sample()
-
 
 if __name__ == "__main__":
     teacher = PendulumAmateurTeacher(seed=0)

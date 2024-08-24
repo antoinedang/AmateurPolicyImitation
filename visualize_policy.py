@@ -5,7 +5,7 @@ from stable_baselines3.common.monitor import Monitor
 import gymnasium as gym
 
 MODEL_TYPE = SAC
-POLICY_NAME = "BipedalWalker"
+POLICY_NAME = "Hopper"
 POLICY_TYPE = "bad"  # bad, good, pure_random
 
 USE_POLICY_CLASS = True
