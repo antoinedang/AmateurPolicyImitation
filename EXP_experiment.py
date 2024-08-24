@@ -7,8 +7,8 @@ python_bin = "C:/Users/antoi/.pyenv/pyenv-win/versions/3.11.0/python.exe"
 def main():
     # List of scripts to run
     scripts = [
-        # f"{python_bin} EXP_randomly_initialize_policies.py",
-        # f"{python_bin} EXP_teach_policies.py",
+        f"{python_bin} EXP_randomly_initialize_policies.py",
+        f"{python_bin} EXP_teach_policies.py",
         f"{python_bin} EXP_train_policies.py",
     ]
 

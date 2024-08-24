@@ -3,13 +3,19 @@ import sys
 
 python_bin = "C:/Users/antoi/.pyenv/pyenv-win/versions/3.11.0/python.exe"
 
-algos = ["ppo", "sac", "td3", "a2c"]
+algos = ["ppo", "sac"]  # , "td3", "a2c"
 policy_types = ["pure_random", "good", "bad"]
-envs = ["MountainCar", "Pendulum", "BipedalWalker", "LunarLander"]
-# TODO: "HalfCheetah" "Humanoid" "Walker2D"
+envs = [
+    "Pendulum",
+    "BipedalWalker",
+    "LunarLander",
+    "HalfCheetah",
+    "Humanoid",
+    "Walker2D",
+]
 
-starting_parameter_combo = "ppo,pure_random,Pendulum"  # inclusive
-ending_parameter_combo = "sac,pure_random,MountainCar"  # exclusive
+starting_parameter_combo = ""  # inclusive
+ending_parameter_combo = ""  # exclusive
 
 
 def main():

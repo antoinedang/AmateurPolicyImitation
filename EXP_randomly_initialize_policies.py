@@ -3,7 +3,7 @@ import sys
 
 python_bin = "C:/Users/antoi/.pyenv/pyenv-win/versions/3.11.0/python.exe"
 
-algos = ["ppo", "sac", "td3", "a2c"]
+algos = ["ppo", "sac"]  # , "td3", "a2c"
 envs = ["HalfCheetah", "Humanoid", "Walker2D"]
 starting_parameter_combo = ""  # inclusive
 ending_parameter_combo = ""  # non-inclusive

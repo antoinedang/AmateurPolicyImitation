@@ -3,18 +3,19 @@ import sys
 
 python_bin = "C:/Users/antoi/.pyenv/pyenv-win/versions/3.11.0/python.exe"
 
-algos = ["ppo", "sac", "td3", "a2c"]
+algos = ["ppo", "sac"]  # , "td3", "a2c"
 policy_types = ["xavier", "orthogonal", "he", "good", "bad", "pure_random"]
 env_configs = [
     "Pendulum-v1,500_000,Pendulum",
     "BipedalWalker-v3,1_000_000,BipedalWalker",
     "LunarLanderContinuous-v2,300_000,LunarLander",
-    "MountainCarContinuous-v0,100_000,MountainCar",
+    "Walker2D-v4,1_000_000,Walker2D",
+    "HalfCheetah-v4,1_000_000,HalfCheetah",
+    "Humanoid-v4,2_000_000,Humanoid",
 ]
-# TODO: "Walker2D-v4,1_000_000,Walker2D" "HalfCheetah-v4,1_000_000,HalfCheetah" "Humanoid-v4,2_000_000,Humanoid"
 
-starting_parameter_combo = "ppo,good,Pendulum"  # inclusive
-ending_parameter_combo = "sac,xavier,Pendulum"  # exclusive
+starting_parameter_combo = ""  # inclusive
+ending_parameter_combo = ""  # exclusive
 
 normalize = "--normalize"  # make empty to disable normalization
 

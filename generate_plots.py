@@ -3,7 +3,6 @@ import os
 python_bin = "C:/Users/antoi/.pyenv/pyenv-win/versions/3.11.0/python.exe"
 
 envs = [
-    "MountainCar",
     "Pendulum",
     "BipedalWalker",
     "LunarLander",
