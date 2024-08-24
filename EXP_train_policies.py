@@ -3,7 +3,7 @@ import sys
 
 python_bin = "C:/Users/antoi/.pyenv/pyenv-win/versions/3.11.0/python.exe"
 
-algos = ["ppo", "sac"]  # , "td3", "a2c"
+algos = ["ppo", "sac", "td3", "a2c"]
 policy_types = ["xavier", "orthogonal", "he", "good", "bad", "pure_random"]
 env_configs = [
     "Pendulum-v1,500_000,Pendulum",
@@ -23,8 +23,8 @@ def main():
     global ending_parameter_combo
 
     for algo in algos:
-        for policy_type in policy_types:
-            for env_config in env_configs:
+        for env_config in env_configs:
+            for policy_type in policy_types:
                 envid, steps, policy_folder = env_config.split(",")
 
                 current_combo = f"{algo},{policy_type},{policy_folder}"
