@@ -1,15 +1,15 @@
 from amateur_pt import AmateurTeacher, transfer_knowledge_and_save
 from typing import Optional
 import numpy as np
-from gymnasium.envs.box2d.bipedal_walker import BipedalWalker
+from gymnasium.envs.mujoco import HumanoidEnv
 
 
-class BipedalWalkerAmateurTeacher(AmateurTeacher):
+class HumanoidAmateurTeacher(AmateurTeacher):
     def __init__(self, seed: Optional[int] = None):
         super().__init__(seed)
-        self.observation_space = BipedalWalker().observation_space
-        self.action_space = BipedalWalker().action_space
-        self.env_id = "BipedalWalker-v3"
+        self.observation_space = HumanoidEnv().observation_space
+        self.action_space = HumanoidEnv().action_space
+        self.env_id = "Humanoid-v4"
 
     def get_action(self, observation: np.ndarray) -> np.ndarray:
         return self.action_space.sample()
@@ -19,7 +19,7 @@ class BipedalWalkerAmateurTeacher(AmateurTeacher):
 
 
 if __name__ == "__main__":
-    teacher = BipedalWalkerAmateurTeacher(seed=0)
+    teacher = HumanoidAmateurTeacher(seed=0)
 
     ##############################################
 

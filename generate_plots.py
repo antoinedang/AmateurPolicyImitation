@@ -4,11 +4,9 @@ python_bin = "C:/Users/antoi/.pyenv/pyenv-win/versions/3.11.0/python.exe"
 
 envs = [
     "Pendulum",
-    "BipedalWalker",
     "LunarLander",
-    "HalfCheetah",
     "Humanoid",
-    "Walker2D",
+    "Hopper",
 ]
 algos = ["ppo", "sac", "td3", "a2c"]
 

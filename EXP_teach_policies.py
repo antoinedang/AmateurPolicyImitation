@@ -7,11 +7,9 @@ algos = ["ppo", "sac"]  # , "td3", "a2c"
 policy_types = ["pure_random", "good", "bad"]
 envs = [
     "Pendulum",
-    "BipedalWalker",
     "LunarLander",
-    "HalfCheetah",
     "Humanoid",
-    "Walker2D",
+    "Hopper",
 ]
 
 starting_parameter_combo = ""  # inclusive

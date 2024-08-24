@@ -67,7 +67,7 @@ plt.legend()
 
 out_path = "plots/" + args.save
 
-if os.path.exists(out_path):
-    print(f"ERROR: File {out_path} already exists. Will not overwrite.")
-    exit(0)
+# if os.path.exists(out_path):
+#     print(f"ERROR: File {out_path} already exists. Will not overwrite.")
+#     exit(0)
 plt.savefig(out_path)

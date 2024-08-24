@@ -1,15 +1,15 @@
 from amateur_pt import AmateurTeacher, transfer_knowledge_and_save
 from typing import Optional
 import numpy as np
-from gymnasium.envs.mujoco import HalfCheetahEnv
+from gymnasium.envs.mujoco import HopperEnv
 
 
-class HalfCheetahAmateurTeacher(AmateurTeacher):
+class HopperAmateurTeacher(AmateurTeacher):
     def __init__(self, seed: Optional[int] = None):
         super().__init__(seed)
-        self.observation_space = HalfCheetahEnv().observation_space
-        self.action_space = HalfCheetahEnv().action_space
-        self.env_id = "HalfCheetah-v4"
+        self.observation_space = HopperEnv().observation_space
+        self.action_space = HopperEnv().action_space
+        self.env_id = "Hopper-v4"
 
     def get_action(self, observation: np.ndarray) -> np.ndarray:
         return self.action_space.sample()
@@ -19,7 +19,7 @@ class HalfCheetahAmateurTeacher(AmateurTeacher):
 
 
 if __name__ == "__main__":
-    teacher = HalfCheetahAmateurTeacher(seed=0)
+    teacher = HopperAmateurTeacher(seed=0)
 
     ##############################################
 
