@@ -1,0 +1,12 @@
+Sun Mar  3 18:23:22 2024
+WARNING: Nan, Inf or huge value in QACC at DOF 17. The simulation is unstable. Time = 0.1180.
+
+Sun Mar  3 18:23:48 2024
+WARNING: Nan, Inf or huge value in QACC at DOF 0. The simulation is unstable. Time = 0.5420.
+
+Sun Mar  3 18:23:53 2024
+WARNING: Nan, Inf or huge value in QACC at DOF 0. The simulation is unstable. Time = 0.5420.
+
+Mon Jun 10 21:01:31 2024
+WARNING: mju_openResource: unknown file '.\humanoid\urdf\new_humanoid1.urdf'
+

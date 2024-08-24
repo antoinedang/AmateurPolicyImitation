@@ -5,8 +5,7 @@ RUN apt-get update
 RUN apt-get install -y python3 python3-pip python-is-python3
 RUN apt-get install -y --no-install-recommends git
 RUN apt-get install libgl1-mesa-glx ffmpeg libsm6 libxext6  -y
-RUN apt-get install -y vim
-RUN apt-get install -y screen
+RUN apt-get install -y vim tmux wget unzip
 
 RUN mkdir -p /root/.mujoco \
     && wget https://www.roboti.us/download/mjpro150_linux.zip -O mujoco.zip \
@@ -27,6 +26,7 @@ RUN pip3 install nvidia-cudnn-cu11==8.9.6.50
 RUN pip3 install stable-baselines3[extra]
 RUN pip3 install tensorflow
 RUN pip3 install rl_zoo3
+RUN pip3 install scipy
 
 # install dependencies for rendering with OpenCV
 RUN apt-get install -y libglfw3
@@ -34,6 +34,14 @@ RUN apt-get install -y libglfw3-dev
 
 RUN apt-get install nvidia-cuda-toolkit; exit 0
 RUN apt --fix-broken install; exit 0
+
+RUN mkdir -p /root/AmateurPolicyImitation
+WORKDIR /root/AmateurPolicyImitation
+
+COPY . /root/AmateurPolicyImitation/ 
+
+RUN pip install -e .
+
 
 RUN apt-get autoremove -y
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
