@@ -6,7 +6,7 @@ import gymnasium as gym
 
 MODEL_TYPE = SAC
 POLICY_NAME = "Hopper"
-POLICY_TYPE = "bad"  # bad, good, pure_random
+POLICY_TYPE = "good"  # bad, good, pure_random
 
 policy_class_ = getattr(
     importlib.import_module("policies." + POLICY_NAME + "." + POLICY_TYPE),
@@ -39,6 +39,11 @@ while True:
                 total_reward += reward
                 # print(reward)
             env.render()
+        print(
+            " >>> Episode Length {}, Total Reward {}".format(
+                episode_length, total_reward
+            )
+        )
     except KeyboardInterrupt:
         print(
             " >>> Episode Length {}, Total Reward {}".format(

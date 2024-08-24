@@ -16,7 +16,7 @@ class HopperAmateurTeacher(AmateurTeacher):
         foot_torque = -10
         thigh_torque = -10
         knee_torque = -10
-        return np.array([thigh_torque, knee_torque, foot_torque])
+        return np.clip(np.array([thigh_torque, knee_torque, foot_torque]), self.action_space.low, self.action_space.high)
 
 
 if __name__ == "__main__":

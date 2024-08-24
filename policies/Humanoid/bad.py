@@ -12,7 +12,7 @@ class HumanoidAmateurTeacher(AmateurTeacher):
         self.env_id = "Humanoid-v4"
 
     def get_action(self, observation: np.ndarray) -> np.ndarray:
-        return self.action_space.sample()
+        return np.clip(np.ones(self.action_space.shape) * -10, self.action_space.low, self.action_space.high)
 
 
 if __name__ == "__main__":
