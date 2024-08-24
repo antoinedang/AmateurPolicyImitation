@@ -1,7 +1,7 @@
 import os
 import subprocess
 
-python_bin = "C:/Users/antoi/.pyenv/pyenv-win/versions/3.11.0/python.exe"
+python_bin = "/usr/bin/python"
 
 
 def main():

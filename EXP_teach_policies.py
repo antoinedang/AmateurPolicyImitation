@@ -1,7 +1,7 @@
 import os
 import sys
 
-python_bin = "C:/Users/antoi/.pyenv/pyenv-win/versions/3.11.0/python.exe"
+python_bin = "/usr/bin/python"
 
 algos = ["ppo", "sac", "td3", "a2c"]
 policy_types = ["pure_random", "good", "bad"]
