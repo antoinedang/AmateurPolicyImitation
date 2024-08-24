@@ -35,7 +35,7 @@ RUN mkdir -p /root/.mujoco \
 
 ENV LD_LIBRARY_PATH /root/.mujoco/mujoco210/bin:${LD_LIBRARY_PATH}
 
-RUN pip install "cython<3"
+RUN pip3 install "cython<3"
 RUN pip3 install mujoco==2.3.0
 RUN apt-get install -y libglew-dev libosmesa6-dev curl patchelf
 
@@ -50,3 +50,10 @@ RUN pip install -e .
 RUN apt-get autoremove -y
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN rm -rf /root/.cache/pip
+
+
+ENV DISPLAY=novnc:0.0
+ENV XLA_FLAGS=--xla_gpu_triton_gemm_any=true
+ENV MUJOCO_GL=egl
+
+RUN python3 -c 'import gymnasium as gym; env=gym.make("Humanoid-v4", render_mode="rgb_array"); env.reset(); env.render()'

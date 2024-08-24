@@ -12,7 +12,11 @@ class HopperAmateurTeacher(AmateurTeacher):
         self.env_id = "Hopper-v4"
 
     def get_action(self, observation: np.ndarray) -> np.ndarray:
-        return self.action_space.sample()
+        STRENGTH = 1.0
+        foot_torque = -10
+        thigh_torque = -10
+        knee_torque = -10
+        return np.array([thigh_torque, knee_torque, foot_torque])
 
 
 if __name__ == "__main__":

@@ -8,23 +8,13 @@ MODEL_TYPE = SAC
 POLICY_NAME = "Hopper"
 POLICY_TYPE = "bad"  # bad, good, pure_random
 
-USE_POLICY_CLASS = True
-ENV_ID = "MountainCarContinuous-v0"
-CKPT = "policies/MountainCar/good_ppo.pt"
+policy_class_ = getattr(
+    importlib.import_module("policies." + POLICY_NAME + "." + POLICY_TYPE),
+    POLICY_NAME + "AmateurTeacher",
+)
 
-if USE_POLICY_CLASS:
-    policy_class_ = getattr(
-        importlib.import_module("policies." + POLICY_NAME + "." + POLICY_TYPE),
-        POLICY_NAME + "AmateurTeacher",
-    )
-
-    agent = policy_class_(seed=0)
-    ENV_ID = agent.env_id
-else:
-    agent = MODEL_TYPE.load(
-        path=CKPT,
-        env=ENV_ID,
-    )
+agent = policy_class_(seed=0)
+ENV_ID = agent.env_id
 
 env = Monitor(gym.make(ENV_ID, render_mode="human"))
 
