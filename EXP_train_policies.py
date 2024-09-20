@@ -17,7 +17,8 @@ env_configs = [
 starting_parameter_combo = ""  # inclusive
 ending_parameter_combo = ""  # exclusive
 
-normalize = "--normalize"  # make empty to disable normalization
+normalize = "--normalize"
+normalize = ""  # make empty to disable normalization
 
 
 def main():

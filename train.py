@@ -5,7 +5,12 @@ from stable_baselines3.common.callbacks import (
     EvalCallback,
     CheckpointCallback,
 )
-from stable_baselines3.common.vec_env import VecMonitor, DummyVecEnv, VecCheckNan
+from stable_baselines3.common.vec_env import (
+    VecMonitor,
+    DummyVecEnv,
+    VecCheckNan,
+    VecNormalize,
+)
 import argparse
 import gymnasium as gym
 from amateur_pt import *
@@ -71,11 +76,11 @@ wall_clock_log_path = log_dir + "/total_training_seconds.txt"
 ##  ENVIRONMENT  SETUP  ##
 ##########################
 
-env = VecMonitor(DummyVecEnv([lambda: gym.make(ENV_ID)]))
-eval_env = VecMonitor(DummyVecEnv([lambda: gym.make(ENV_ID)]))
+env = VecNormalize(VecMonitor(DummyVecEnv([lambda: gym.make(ENV_ID)])))
+eval_env = VecNormalize(VecMonitor(DummyVecEnv([lambda: gym.make(ENV_ID)])))
 
-env = VecCheckNan(env, raise_exception=False)
-eval_env = VecCheckNan(eval_env, raise_exception=False)
+env = VecNormalize(VecCheckNan(env, raise_exception=False))
+eval_env = VecNormalize(VecCheckNan(eval_env, raise_exception=False))
 
 ##########################
 ## MODEL INITIALIZATION ##

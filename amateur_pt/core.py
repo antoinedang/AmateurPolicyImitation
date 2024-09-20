@@ -142,13 +142,20 @@ class AmateurDataset(Dataset):
     ):
         self.teacher = teacher
         self.len = len
+        # INITIALIZE DATA HERE
+        obs = np.array([self.teacher.generate_sample()[0] for _ in range(len)])
+        # GET STD AND MEAN FOR NORMALIZATION PARAMS
+        self.obs_mean = np.mean(obs, axis=0)
+        self.obs_std = np.std(obs, axis=0)
 
     def __len__(self) -> int:
         return self.len
 
     def __getitem__(self, _) -> Tuple[torch.Tensor, torch.Tensor]:
         x, y = self.teacher.generate_sample()
-        return torch.tensor(x), torch.tensor(y, dtype=torch.float32)
+        return torch.tensor((x - self.obs_mean) / self.obs_std), torch.tensor(
+            y, dtype=torch.float32
+        )
 
 
 def evaluate_policy(
