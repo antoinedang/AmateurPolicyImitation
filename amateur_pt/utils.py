@@ -19,7 +19,7 @@ MODEL_TYPES = {
 TRAINING_KWARGS = dict(
     epochs=100,
     teacher_interactions_per_epoch=int(4e5),
-    make_optimizer=lambda params: optim.Adam(params, lr=0.001, weight_decay=1e-3),
+    make_optimizer=lambda params: optim.Adam(params, lr=0.001, weight_decay=1e-4),
     make_scheduler=lambda optimizer: lr_scheduler.StepLR(
         optimizer, step_size=1, gamma=1.0
     ),

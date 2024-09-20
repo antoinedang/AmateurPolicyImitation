@@ -3,13 +3,21 @@ import sys
 
 python_bin = "/usr/bin/python"
 
-algos = ["ppo", "sac", "td3", "a2c"]
-policy_types = ["pure_random", "good", "bad"]
+# algos = ["ppo", "sac", "td3", "a2c"]
+algos = ["ppo", "sac"]
+# policy_types = ["pure_random", "good", "bad"]
+policy_types = ["good"]
+# envs = [
+#     "Pendulum",
+#     "LunarLander",
+#     "Humanoid",
+#     "Hopper",
+# ]
 envs = [
     "Pendulum",
-    "LunarLander",
+    # "LunarLander",
     "Humanoid",
-    "Hopper",
+    # "Hopper",
 ]
 
 starting_parameter_combo = ""  # inclusive

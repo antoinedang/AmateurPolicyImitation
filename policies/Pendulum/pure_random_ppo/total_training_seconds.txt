@@ -1,2 +1,0 @@
-2074.2862207889557 total training time (seconds)
-144.62806385798334 steps/second (average)

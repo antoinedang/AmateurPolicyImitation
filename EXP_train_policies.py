@@ -3,12 +3,14 @@ import sys
 
 python_bin = "/usr/bin/python"
 
-algos = ["ppo", "sac", "td3", "a2c"]
-policy_types = ["xavier", "orthogonal", "he", "good", "bad", "pure_random"]
+# algos = ["ppo", "sac", "td3", "a2c"]
+algos = ["ppo", "sac"]
+# policy_types = ["xavier", "orthogonal", "he", "good", "bad", "pure_random"]
+policy_types = ["xavier", "orthogonal", "he", "good"]
 env_configs = [
     "Pendulum-v1,500_000,Pendulum",
-    "LunarLanderContinuous-v2,300_000,LunarLander",
-    "Hopper-v4,1_000_000,Hopper",
+    # "LunarLanderContinuous-v2,300_000,LunarLander",
+    # "Hopper-v4,1_000_000,Hopper",
     "Humanoid-v4,2_000_000,Humanoid",
 ]
 

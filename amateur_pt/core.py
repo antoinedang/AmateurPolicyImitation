@@ -12,7 +12,7 @@ from stable_baselines3.common.monitor import Monitor
 from stable_baselines3.common.type_aliases import PolicyPredictor
 from gymnasium import Env
 from scipy.spatial import distance
-from gymnasium.wrappers import ClipAction
+from gymnasium.wrappers import ClipAction, NormalizeObservation
 
 
 class AmateurTeacher:
@@ -32,6 +32,8 @@ class AmateurTeacher:
 
     def generate_sample(self) -> Tuple[np.ndarray, np.ndarray]:
         obs = self.generate_observation(self.seed)
+        # TODO: NORMALIZE OBSERVATION
+        # NormalizeObservation class
         amateur_action = self.get_action(obs)
 
         try:

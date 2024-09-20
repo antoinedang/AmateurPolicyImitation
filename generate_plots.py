@@ -1,6 +1,7 @@
 import os
 
-python_bin = "/usr/bin/python"
+# python_bin = "/usr/bin/python"
+python_bin = "C:/Users/antoi/.pyenv/pyenv-win/versions/3.11.0/python.exe"
 
 envs = [
     "Pendulum",
