@@ -162,6 +162,7 @@ def evaluate_policy(
     env: Union[str, Env],
     policy: PolicyPredictor,
     teacher: Optional[AmateurTeacher] = None,
+    normalize: bool = False,
 ) -> Tuple[float, float, float]:
 
     if not isinstance(policy, AmateurTeacher) and teacher is None:
@@ -175,6 +176,8 @@ def evaluate_policy(
         if teacher is not None
         else policy.generate_observation
     )
+    if normalize:
+        env = NormalizeObservation(env)
     avg_reward, std_reward = _evaluate_policy(policy, env, render=False)
 
     actions = []

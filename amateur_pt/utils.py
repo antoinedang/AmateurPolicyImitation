@@ -58,7 +58,9 @@ def transfer_knowledge_and_save(
         f.write(f"Teacher class balance score: {class_imbalance}\n\n")
 
     student = MODEL_TYPES[args.algo.upper()]("MlpPolicy", env_id, **ALGO_KWARGS)
-    avg_reward, std_reward, class_imbalance = evaluate_policy(env_id, student, teacher)
+    avg_reward, std_reward, class_imbalance = evaluate_policy(
+        env_id, student, teacher, normalize=True
+    )
     print("Un-initialized student average reward: {}".format(avg_reward))
     print("Un-initialized student std. reward: {}".format(std_reward))
     print("Un-initialized student class balance score: {}".format(class_imbalance))
@@ -72,7 +74,9 @@ def transfer_knowledge_and_save(
     total_teaching_time = time.time() - start_teaching_time
     student.policy.load_state_dict(pre_trained_state_dict)
 
-    avg_reward, std_reward, class_imbalance = evaluate_policy(env_id, student, teacher)
+    avg_reward, std_reward, class_imbalance = evaluate_policy(
+        env_id, student, teacher, normalize=True
+    )
     print("Initialized student average reward: {}".format(avg_reward))
     print("Initialized student std. reward: {}".format(std_reward))
     print("Initialized student class balance score: {}".format(class_imbalance))
